@@ -1,0 +1,49 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.hingehealth'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(11)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Swagger dependencies
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	//junit
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+
+}
+
+// Swagger configuration
+configurations {
+	swaggerImplementation
+}
+
+// Swagger task
+task swagger(type: Jar) {
+	from configurations.swaggerImplementation
+	archiveClassifier.set('swagger')
+}
+
+test {
+	useJUnitPlatform()
+}
